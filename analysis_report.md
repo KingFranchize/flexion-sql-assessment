@@ -1,11 +1,11 @@
-# 📊 Analysis Report: Flexion SQL Technical Assessment
+# Analysis Report: Flexion SQL Technical Assessment
 
 ### Author: David Boateng  
 ### Date: September 2025
 
 ---
 
-## ✅ Exercise 1: Join claim data with policy data using fuzzy email matching
+## Exercise 1: Join claim data with policy data using fuzzy email matching
 
 The challenge here is that `beneficiary_email` in `claim_results` may contain typos, while `patient_email` in `policy_holders` is clean.  
 To address this:
@@ -16,7 +16,7 @@ To address this:
 
 ---
 
-## ✅ Exercise 2: Add `customer_claim_recency_number`
+##  Exercise 2: Add `customer_claim_recency_number`
 
 For each customer (identified by `beneficiary_email`), I needed to determine the order of their visits by recency:
 - Used `ROW_NUMBER()` window function
@@ -27,7 +27,7 @@ For each customer (identified by `beneficiary_email`), I needed to determine the
 
 ---
 
-## ✅ Exercise 3: Average claim score by month and policy length
+##  Exercise 3: Average claim score by month and policy length
 
 Objective: Group data by **month of visit** and **policy length**, then compute the average of `medical_answer`:
 - Used `FORMAT(service_date, 'yyyy-MM')` for clean month formatting
@@ -38,7 +38,7 @@ Objective: Group data by **month of visit** and **policy length**, then compute 
 
 ---
 
-## ✅ Exercise 4: Add `flag_for_review`
+##  Exercise 4: Add `flag_for_review`
 
 Flag conditions:
 - If `average_claim_score < 8`, then flag as `1` (true)
@@ -53,7 +53,7 @@ Implementation:
 
 ---
 
-## ✅ Final Notes
+##  Final Notes
 
 This solution was written using T-SQL, designed to be readable, maintainable, and production-ready.  
 Edge cases were handled where possible with SQL Server-native tools. In a production environment, I would recommend:
