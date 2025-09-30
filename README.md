@@ -1,60 +1,114 @@
-# 🧠 Flexion SQL Technical Assessment — Data Analyst Submission
+# 🧠 Flexion SQL Technical Assessment – Data Analyst Submission
 
-Hi there 👋 — I'm David, and this repo contains my completed submission for the SQL technical assessment provided by Flexion.
+Hi, I'm David, and this repository contains my completed SQL technical assessment for the Data Analyst role at Flexion.
 
-This project reflects how I approach analytical problems: blending clean logic with practical handling of real-world data issues like typos and missing consistency. I’ve structured the repo and SQL code to be both readable and scalable — just how I’d build it if this were a live production task.
-
----
-
-## 🗂️ What's in this Repo?
-
-| File               | Description                                                  |
-|--------------------|--------------------------------------------------------------|
-| `answers.sql`       | Fully commented T-SQL solutions to all 4 exercises            |
-| `analysis_report.md`| Walkthrough of my logic, choices, and assumptions            |
-| `README.md`         | This file — overview and how to navigate the repo            |
+This project was designed to test analytical thinking, SQL fluency, and the ability to reason through imperfect real-world data — and that’s exactly how I approached it. I’ve treated this assessment like I would a scoped production task, focusing not just on writing correct SQL, but on making it maintainable, explainable, and reflective of real business needs.
 
 ---
 
-## 🛠️ Tech Used
+## 📂 Repository Structure
+
+| File                | Description                                                                 |
+|---------------------|-----------------------------------------------------------------------------|
+| `answers.sql`        | Fully annotated T-SQL code with step-by-step logic                         |
+| `analysis_report.md` | A deeper dive into my reasoning, decisions, and assumptions                |
+| `README.md`          | Overview, methodology, and considerations for reviewers                    |
+
+---
+
+## 🛠️ Tools & Skills Demonstrated
 
 - **SQL Server (T-SQL)**
-- GitHub for version control & documentation
-- SQL techniques: `JOIN`, `ROW_NUMBER`, `GROUP BY`, CTEs, fuzzy matching (`SOUNDEX`, `DIFFERENCE`)
+- Joins (exact & fuzzy matching with `SOUNDEX` and `DIFFERENCE`)
+- Window functions (`ROW_NUMBER()`)
+- Aggregation & grouping (`AVG`, `GROUP BY`, date formatting)
+- Conditional logic (`CASE`, boolean flags)
+- Use of CTEs for clarity and modularity
+- Real-world production practices: code commenting, normalization, type handling
 
 ---
 
-## ✍️ Thought Process & Highlights
+## 🔍 Project Overview
 
-- **Messy Data? Bring it on.**  
-  Real-world email data often has inconsistencies, so I built in fuzzy matching logic to help simulate a more production-level join. I used T-SQL's `SOUNDEX()` and `DIFFERENCE()` to handle typos gracefully.
-
-- **Recency Ranking Made Clean.**  
-  I used `ROW_NUMBER()` to track most recent visits per customer — the kind of thing that comes up often in lifecycle or behavior-based analysis.
-
-- **Aggregation with Precision.**  
-  When calculating averages, I made sure to cast to float to avoid hidden bugs due to integer division.
-
-- **Business Rules = Logic + Exceptions.**  
-  For the review flag in Exercise 4, I combined simple thresholds with an exception for April — highlighting the balance between logic and business nuance.
+This assessment involved 4 core SQL tasks related to claims and policyholder data. The data provided was intentionally imperfect in places (e.g. inconsistent email fields), requiring both technical accuracy and business judgment.
 
 ---
 
-## 🧩 If This Were Production...
+### ✅ Exercise 1: Join Tables with Fuzzy Matching
 
-If I were building this for a production environment, I’d go further by:
-- Creating temp views or stored procedures
-- Auditing fuzzy joins to identify false matches
-- Building unit tests for critical logic
-- Adding visuals or dashboards to tell the story behind the data
+> **Objective:** Join `claim_results` and `policy_holders` using email addresses, which may contain typos.
+
+- First attempt: Normalize both emails using `LOWER()`, `LTRIM()`, and `RTRIM()`
+- Fallback: Apply fuzzy matching using T-SQL’s `SOUNDEX()` and `DIFFERENCE()` functions
+- Approach prioritizes exact matches but allows near matches when exact fails
+
+🧠 **Why it matters:** Inconsistent identifiers are common in healthcare and insurance datasets. This logic reduces the risk of missing true matches due to minor user entry errors.
 
 ---
 
-## 🙌 Final Thoughts
+### ✅ Exercise 2: Rank Claims by Recency
 
-Thanks for taking the time to review my submission. I enjoyed working through this assessment — especially the mix of SQL logic and data intuition required. Let me know if you'd like me to walk through any part in more detail.
+> **Objective:** Add a `customer_claim_recency_number` for each visit
 
-Looking forward to the next steps!
+- Used `ROW_NUMBER()` to rank each beneficiary’s visits by descending service date
+- Ensures each customer’s most recent claim is ranked 1, next visit is 2, and so on
 
-Best,  
-David
+🧠 **Use case:** This technique is often applied in cohort analysis, churn prediction, or behavioral segmentation.
+
+---
+
+### ✅ Exercise 3: Monthly Aggregation by Policy Length
+
+> **Objective:** Calculate average claim score by month and `policy_length`
+
+- Used `FORMAT()` to extract month from `service_date`
+- Grouped by month and policy length
+- Used float division (`medical_answer * 1.0`) to ensure decimal accuracy
+
+🧠 **Why it matters:** Knowing how claim behavior varies by policy type and seasonality is essential for underwriting and forecasting.
+
+---
+
+### ✅ Exercise 4: Flag Claims for Review
+
+> **Objective:** Flag any average claim score < 8, *except* for visits in April
+
+- Built on Exercise 3 using a CTE (`MonthlyScores`)
+- Used `CASE` to add a `flag_for_review` column
+- Ensured April is excluded using `MONTH(service_date) <> 4`
+
+🧠 **Why it matters:** Business rules often include logic exceptions. Hard-coding those exceptions into scalable, documented logic ensures both accuracy and auditability.
+
+---
+
+## 🧩 Production Considerations
+
+If this were a production task, I’d also consider:
+
+- Adding **unit tests or validation checks** for the joins and ranking logic
+- Exporting monthly summary reports or dashboards (e.g., Power BI)
+- Building out **stored procedures** or **views** for reusability
+- Logging unmatched or ambiguously matched records for QA
+- Adding indexing suggestions for large datasets on `email`, `service_date`, etc.
+
+---
+
+## 🧠 Reflection
+
+I enjoyed working through this assessment because it balanced SQL fundamentals with messy data realities — which mirrors what we often deal with in real-world analytics work.
+
+My goal wasn’t just to write code that runs, but to create something that could:
+- Be understood by another analyst
+- Be expanded upon by an engineer
+- Be trusted by a stakeholder
+
+---
+
+## 🙋‍♂️ About Me
+
+I’m a data analyst with experience in SQL, Python, and data visualization, and I bring a mix of analytical precision and business context to everything I build. I care about clean logic, scalable workflows, and clear communication.
+
+Thanks for taking the time to review my work. I’m looking forward to the next steps.
+
+Best regards,  
+**David**
