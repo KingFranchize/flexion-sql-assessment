@@ -1,65 +1,89 @@
-# Analysis Report: Flexion SQL Technical Assessment
+# 📊 Analysis Report: Flexion SQL Technical Assessment
 
-### Author: David Boateng  
-### Date: September 2025
-
----
-
-## Exercise 1: Join claim data with policy data using fuzzy email matching
-
-The challenge here is that `beneficiary_email` in `claim_results` may contain typos, while `patient_email` in `policy_holders` is clean.  
-To address this:
-- I first normalized both emails using `LOWER()`, `LTRIM()`, and `RTRIM()`.
-- I added a fuzzy matching fallback using `SOUNDEX()` and `DIFFERENCE()` (T-SQL's built-in phonetic comparison).
-
-> This ensures robust matching even when user input is inconsistent.
+### Candidate: David Boateng 
+### Submission Date: September 2025  
+### Role: Data Analyst  
 
 ---
 
-##  Exercise 2: Add `customer_claim_recency_number`
+## 📝 Overview
 
-For each customer (identified by `beneficiary_email`), I needed to determine the order of their visits by recency:
-- Used `ROW_NUMBER()` window function
-- Partitioned by email, ordered by `service_date DESC`
-- This assigns 1 to the most recent claim, 2 to the second most recent, etc.
+This report provides a detailed walkthrough of my solution to the SQL technical assessment for the Data Analyst role at Flexion. I approached the task not only to provide correct answers, but to write code and logic that would hold up in a real production or analytics environment.
 
-> This method is scalable and accurate for tracking claim history.
+Each exercise is treated as a practical scenario requiring clarity, maintainability, and robustness — not just execution.
 
 ---
 
-##  Exercise 3: Average claim score by month and policy length
+## ✅ Exercise 1: Joining `claim_results` and `policy_holders` using fuzzy matching
 
-Objective: Group data by **month of visit** and **policy length**, then compute the average of `medical_answer`:
-- Used `FORMAT(service_date, 'yyyy-MM')` for clean month formatting
-- Used `AVG(medical_answer * 1.0)` to ensure float division
-- Grouped by month and `policy_length`
+### 🔍 Objective
 
-> This helps understand patterns in claim scoring over time and by policy type.
+Link claim records with policy data, despite potential typos or inconsistencies in email addresses.
+
+### 🛠️ Approach
+
+- **Step 1: Normalize email fields** using `LOWER()`, `LTRIM()`, and `RTRIM()` to standardize casing and remove trailing/leading spaces.
+- **Step 2: Fallback fuzzy matching** using:
+  - `SOUNDEX()` for phonetic similarity (misspellings that sound similar)
+  - `DIFFERENCE()` to compute similarity score (0 to 4); threshold set to 3+
+
+### 🧠 Why This Matters
+
+In real-world datasets, email fields often suffer from:
+- Manual entry errors
+- Extra whitespace
+- Case sensitivity
+
+Rather than dropping mismatches, I’ve included a soft join condition to retain potentially valuable records.
+
+### ⚖️ Trade-offs
+
+- **Pros**: Higher match rate; more inclusive data joining
+- **Cons**: Potential for false positives; should be reviewed/QA’d before production use
 
 ---
 
-##  Exercise 4: Add `flag_for_review`
+## ✅ Exercise 2: Add `customer_claim_recency_number`
 
-Flag conditions:
-- If `average_claim_score < 8`, then flag as `1` (true)
-- But never flag if the month is April
+### 🔍 Objective
 
-Implementation:
-- Built on the previous monthly aggregation (Exercise 3)
-- Used `CASE` logic to exclude April (`MONTH(service_date) = 4`)
-- Output includes a boolean-like `flag_for_review` field
+For each beneficiary, rank their claims from most recent to oldest.
 
-> This rule helps identify potentially concerning trends while honoring special exceptions.
+### 🛠️ Approach
+
+- Used `ROW_NUMBER()` over a window partitioned by `beneficiary_email` and ordered by `service_date DESC`.
+- The result gives us the most recent visit per user as rank 1, second most recent as 2, and so on.
+
+### 🧠 Why This Matters
+
+Recency-based metrics are common in:
+- Customer behavior analysis
+- Retention modeling
+- Patient visit tracking
+
+This technique is scalable to thousands or millions of users without additional subqueries or joins.
 
 ---
 
-##  Final Notes
+## ✅ Exercise 3: Average claim score by month and policy length
 
-This solution was written using T-SQL, designed to be readable, maintainable, and production-ready.  
-Edge cases were handled where possible with SQL Server-native tools. In a production environment, I would recommend:
-- Deeper data quality checks
-- Fuzzy matching audit logs
-- Consideration of NULL values and outliers
+### 🔍 Objective
+
+Aggregate `medical_answer` scores by:
+- The month of the claim
+- The duration of the policy
+
+### 🛠️ Approach
+
+- Used `FORMAT(service_date, 'yyyy-MM')` to extract year-month
+- Grouped by both `visit_month` and `policy_length`
+- Used `AVG(medical_answer * 1.0)` to ensure float precision (avoid integer division)
+
+### 🧠 Why This Matters
+
+Tracking claim behavior by time and policy type helps uncover:
+- Seasonality trends
+- Differences between sho
 
 ---
 
