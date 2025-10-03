@@ -87,7 +87,7 @@ Tracking claim behavior by time and policy type helps uncover:
 
 ---
 
-## Question 4: Data Analysis & Insights
+## ✅ Exercise 4: Data Analysis & Insights
 
 **Objective**  
 Identify key trends in claim volume and cost over time to support better resource planning, cost control, and operational efficiency.  
