@@ -87,5 +87,17 @@ Tracking claim behavior by time and policy type helps uncover:
 
 ---
 
+## Question 4: Data Analysis & Insights
+
+**Objective**  
+Identify key trends in claim volume and cost over time to support better resource planning, cost control, and operational efficiency.  
+
+**Approach**  
+- Aggregated claims data by month to observe patterns in volume and cost.  
+- Calculated average claim cost, month-over-month growth rates, and rolling 3-month averages using SQL.  
+- Interpreted trends to connect data findings to actionable business opportunities.  
+
+
+
 ### Thank you for reviewing my work!
 
