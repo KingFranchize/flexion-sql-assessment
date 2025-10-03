@@ -1,12 +1,12 @@
-# 🧠 Flexion SQL Technical Assessment – Data Analyst Submission
+#  Flexion SQL Technical Assessment – Data Analyst Submission
 
 Hi, I'm David, and this repository contains my completed SQL technical assessment for the Data Analyst role at Flexion.
 
-This project was designed to test analytical thinking, SQL fluency, and the ability to reason through imperfect real-world data — and that’s exactly how I approached it. I’ve treated this assessment like I would a scoped production task, focusing not just on writing correct SQL, but on making it maintainable, explainable, and reflective of real business needs.
+This project was designed to test analytical thinking, SQL fluency and the ability to reason through imperfect real world data. I’ve treated this assessment like I would a scoped production task, focusing not just on writing correct SQL, but on making it maintainable, explainable and reflective of real business needs.
 
 ---
 
-## 📂 Repository Structure
+##  Repository Structure
 
 | File                | Description                                                                 |
 |---------------------|-----------------------------------------------------------------------------|
@@ -16,7 +16,7 @@ This project was designed to test analytical thinking, SQL fluency, and the abil
 
 ---
 
-## 🛠️ Tools & Skills Demonstrated
+##  Tools & Skills Demonstrated
 
 - **SQL Server (T-SQL)**
 - Joins (exact & fuzzy matching with `SOUNDEX` and `DIFFERENCE`)
@@ -28,13 +28,13 @@ This project was designed to test analytical thinking, SQL fluency, and the abil
 
 ---
 
-## 🔍 Project Overview
+##  Project Overview
 
 This assessment involved 4 core SQL tasks related to claims and policyholder data. The data provided was intentionally imperfect in places (e.g. inconsistent email fields), requiring both technical accuracy and business judgment.
 
 ---
 
-### ✅ Exercise 1: Join Tables with Fuzzy Matching
+###  Exercise 1: Join Tables with Fuzzy Matching
 
 > **Objective:** Join `claim_results` and `policy_holders` using email addresses, which may contain typos.
 
@@ -42,22 +42,22 @@ This assessment involved 4 core SQL tasks related to claims and policyholder dat
 - Fallback: Apply fuzzy matching using T-SQL’s `SOUNDEX()` and `DIFFERENCE()` functions
 - Approach prioritizes exact matches but allows near matches when exact fails
 
-🧠 **Why it matters:** Inconsistent identifiers are common in healthcare and insurance datasets. This logic reduces the risk of missing true matches due to minor user entry errors.
+ **Why it matters:** Inconsistent identifiers are common in healthcare and insurance datasets. This logic reduces the risk of missing true matches due to minor user entry errors.
 
 ---
 
-### ✅ Exercise 2: Rank Claims by Recency
+###  Exercise 2: Rank Claims by Recency
 
 > **Objective:** Add a `customer_claim_recency_number` for each visit
 
 - Used `ROW_NUMBER()` to rank each beneficiary’s visits by descending service date
 - Ensures each customer’s most recent claim is ranked 1, next visit is 2, and so on
 
-🧠 **Use case:** This technique is often applied in cohort analysis, churn prediction, or behavioral segmentation.
+ **Use case:** This technique is often applied in cohort analysis, churn prediction, or behavioral segmentation.
 
 ---
 
-### ✅ Exercise 3: Monthly Aggregation by Policy Length
+###  Exercise 3: Monthly Aggregation by Policy Length
 
 > **Objective:** Calculate average claim score by month and `policy_length`
 
@@ -65,11 +65,11 @@ This assessment involved 4 core SQL tasks related to claims and policyholder dat
 - Grouped by month and policy length
 - Used float division (`medical_answer * 1.0`) to ensure decimal accuracy
 
-🧠 **Why it matters:** Knowing how claim behavior varies by policy type and seasonality is essential for underwriting and forecasting.
+ **Why it matters:** Knowing how claim behavior varies by policy type and seasonality is essential for underwriting and forecasting.
 
 ---
 
-### ✅ Exercise 4: Flag Claims for Review
+###  Exercise 4: Flag Claims for Review
 
 > **Objective:** Flag any average claim score < 8, *except* for visits in April
 
@@ -77,11 +77,11 @@ This assessment involved 4 core SQL tasks related to claims and policyholder dat
 - Used `CASE` to add a `flag_for_review` column
 - Ensured April is excluded using `MONTH(service_date) <> 4`
 
-🧠 **Why it matters:** Business rules often include logic exceptions. Hard-coding those exceptions into scalable, documented logic ensures both accuracy and auditability.
+ **Why it matters:** Business rules often include logic exceptions. Hard-coding those exceptions into scalable, documented logic ensures both accuracy and auditability.
 
 ---
 
-## 🧩 Production Considerations
+##  Production Considerations
 
 If this were a production task, I’d also consider:
 
@@ -93,14 +93,14 @@ If this were a production task, I’d also consider:
 
 ---
 
-## 🧠 Reflection
+##  Reflection
 
 I enjoyed working through this assessment because it balanced SQL fundamentals with messy data realities — which mirrors what we often deal with in real-world analytics work.
 
 My goal wasn’t just to write code that runs, but to create something that could:
-- Be understood by another analyst
-- Be expanded upon by an engineer
-- Be trusted by a stakeholder
+- Be understood other analysts
+- Be expanded upon by engineers
+- Be trusted by stakeholders
 
 ---
 
@@ -108,7 +108,7 @@ My goal wasn’t just to write code that runs, but to create something that coul
 
 I’m a data analyst with experience in SQL, Python, and data visualization, and I bring a mix of analytical precision and business context to everything I build. I care about clean logic, scalable workflows, and clear communication.
 
-Thanks for taking the time to review my work. I’m looking forward to the next steps.
+Thanks for taking the time to review my work.
 
 Best regards,  
 **David**
