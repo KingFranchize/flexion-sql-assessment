@@ -19,8 +19,8 @@ SELECT
 FROM 
     claim_results cr         -- Base table containing 1 row per medical claim
 LEFT JOIN 
-    policy_holders ph        -- Reference table containing policyholder details
-    ON 
+    policy_holders ph        -- Reference table containing policyholder details  ***I chose to use a LEFT JOIN in this query because it ensures that we retain all records from the primary table (claims/claim_results), even if there is no corresponding match in the secondary table. This is important because we want to capture the full scope of claim activity, including those cases where related details may be missing or incomplete in the joined dataset. Using an INNER JOIN would have excluded those unmatched records, potentially underreporting the data. Similarly, a RIGHT JOIN or FULL OUTER JOIN would not align with the business requirement, as our analysis is anchored on the primary table. The LEFT JOIN provides both completeness and accuracy while maintaining the integrity of the dataset.***
+    ON                       --Use LEFT JOIN when your main table is claims and you need to keep them all. 
     (
         -- === Step 1: Try an exact match after normalization ===
 
