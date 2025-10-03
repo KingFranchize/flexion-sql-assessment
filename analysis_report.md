@@ -95,7 +95,13 @@ Identify key trends in claim volume and cost over time to support better resourc
 **Approach**  
 - Aggregated claims data by month to observe patterns in volume and cost.  
 - Calculated average claim cost, month-over-month growth rates, and rolling 3-month averages using SQL.  
-- Interpreted trends to connect data findings to actionable business opportunities.  
+- Interpreted trends to connect data findings to actionable business opportunities.
+
+
+##Why It Matters##
+Operational Planning: Clear visibility into monthly claim spikes (e.g., January and July) allows leadership to anticipate workloads and staff accordingly.
+Financial Control: Monitoring average claim cost and growth rates provides insight into whether interventions (e.g., cost containment strategies) are effective.
+Strategic Alignment: Rolling 3-month averages help smooth out volatility, giving executives a clearer picture of sustained patterns rather than reacting to one-off anomalies.
 
 
 
